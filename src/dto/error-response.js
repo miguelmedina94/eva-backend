@@ -10,6 +10,13 @@ class ErrorResponse extends Error{
         this.code = 400;
         return this;
     }
+
+    BadRequestError(errors){
+        this.message = "Error - Bad Request";
+        this.code = 400;
+        this.errors = errors
+        return this;
+    }
 }
 
 module.exports = ErrorResponse

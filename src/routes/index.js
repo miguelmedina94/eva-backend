@@ -6,7 +6,7 @@ const assetsRoutes = require('./asset-routes');
 const rootRouter = express.Router();
 
 //Asigacion de paths para cada ruta del router principal
-rootRouter.use('/employees',employeeRoutes);
+rootRouter.use('/employees', employeeRoutes);
 rootRouter.use('/assets', assetsRoutes);
 
 module.exports = rootRouter;

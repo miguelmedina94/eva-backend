@@ -2,6 +2,7 @@ const employeeService = require('../services/empleoyee-service');
 const EmployeeDTO = require('../dto/employee-dto');
 const ErrorResponse = require('../dto/error-response');
 const SuccessResponse = require('../dto/success-response');
+const { validationResult } = require('express-validator');
 
 const getAllEmployees = async (req, res, next) => {
     const serviceResponse = await employeeService.findAllEmployee();
@@ -23,13 +24,21 @@ const getEmployeeById = async (req, res, next) => {
     }
 };
 const createEmployee = async (req, res, next) => {
-    const employeeDTO = new EmployeeDTO(req.body);
-    const serviceResponse = await employeeService.createEmployee(employeeDTO);
+    try{
+        const employeeDTO = new EmployeeDTO(req.body);
 
-    if(serviceResponse === null){
-        res.json(new ErrorResponse().notFoundError());
-    }else{
-        res.json(new SuccessResponse().CreatedMessage(serviceResponse));
+        const errors = validationResult(req);
+        if(!errors.isEmpty()){
+            res.json(new ErrorResponse().BadRequestError(errors.array()))
+        }
+        const serviceResponse = await employeeService.createEmployee(employeeDTO);
+        if(serviceResponse === null){
+            res.json(new ErrorResponse().notFoundError());
+        }else{
+            res.json(new SuccessResponse().CreatedMessage(serviceResponse));
+        }
+    } catch(error) {
+        next(error);
     }
 };
 

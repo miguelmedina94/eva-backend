@@ -39,16 +39,15 @@ const createAsset = async (values) => {
     return result[0].insertId;
 };
 const updateAsset = async (asset, id) => {
-    const { first_name, last_name, cuit, team_id, join_date, rol} = asset;
-    const result = await connection.query("UPDATE assets SET first_name=?, last_name=?, cuit=?, team_id=?, join_date=?, rol=? WHERE id=?",
-    [
-        first_name,
-        last_name,
-        cuit,
-        team_id,
-        join_date,
-        rol,
-        id
+    const { name, type, code, description, purchase_date, employee_id} = asset;
+    const result = await connection.query("UPDATE assets SET name=?, type=?, code=?, description=?, purchase_date=?, employee_id=? WHERE id=?",
+    [name,
+    type,
+    code,
+    description,
+    purchase_date,
+    employee_id,
+    id
     ]);
     return result[0].affectedRows;
 };

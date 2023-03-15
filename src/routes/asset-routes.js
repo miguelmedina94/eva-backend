@@ -13,7 +13,7 @@ assetsRoutes
 assetsRoutes
     .route('/:id')
     .get(assetsController.getAssetById)
-    .patch(assetsController.updateAsset)
+    .put(assetsController.updateAsset)
     .delete(assetsController.deleteAsset);
 
 assetsRoutes

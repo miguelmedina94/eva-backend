@@ -47,7 +47,8 @@ const createAsset = async (req, res, next) => {
 };
 const updateAsset = async (req, res, next) => {
     const assetDTO = new AssetDTO(req.body);
-    const serviceResponse = await assetsService.updateAsset(assetDTO);
+    const { id } = req.params;
+    const serviceResponse = await assetsService.updateAsset(assetDTO, id);
 
     switch (serviceResponse){
         case 400:
