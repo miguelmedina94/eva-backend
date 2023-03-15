@@ -4,11 +4,17 @@ const findAllEmployee = async () => {
     const rows = await connection.query("SELECT * FROM employees e").spread((rows) => rows);
     return rows;
 };
+
+const findPaginatedEmployees = async (items, offset) => {
+    const rows = await connection.query(`SELECT * FROM employees a LIMIT ${items} OFFSET ${offset}`).spread((rows) => rows);
+    return rows;
+};
+
 const findEmployeeById = async (id) => {
     const row = await connection.query(`SELECT * FROM employees e WHERE id = ${id}`).spread((rows) => rows);
-
     return row;
 };
+
 const createEmployee = async (values) => {
     const { 
         first_name,
@@ -50,6 +56,7 @@ const deleteEmployee = async (id) => {
 
 module.exports = {
     findAllEmployee: findAllEmployee,
+    findPaginatedEmployees: findPaginatedEmployees,
     findEmployeeById: findEmployeeById,
     createEmployee: createEmployee,
     updateEmployee: updateEmployee,

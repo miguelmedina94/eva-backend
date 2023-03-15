@@ -1,6 +1,6 @@
 const { body, param } = require('express-validator');
 
-const validateEmployeeRules = [
+const validatePost = [
     body('first_name')
         .isString()
         .withMessage('This is a not valid first_name')
@@ -39,56 +39,46 @@ const validateEmployeeRules = [
         .withMessage('rol have a not valid length'),
 ];
 
-const validateAssetRules = [
-    body('name')
+const validatePut = [
+    body('first_name').optional()
         .isString()
-        .withMessage('This is a not valid name')
+        .withMessage('This is a not valid first_name')
         .notEmpty()
-        .withMessage('name is require')
+        .withMessage('first_name is require')
         .isLength({min: 3, max: 50})
-        .withMessage('name have a not valid length'),
-    body('type')
+        .withMessage('first_name have a not valid length'),
+    body('last_name').optional()
         .isString()
-        .withMessage('This is a not valid type')
+        .withMessage('This is a not valid last_name')
         .notEmpty()
-        .withMessage('type is require')
-        .isLength({min: 3, max: 30})
-        .withMessage('type have a not valid length'),
-    body('code')
-        .isAlphanumeric()
-        .withMessage('This is a not valid code')
-        .isLength({min: 10, max: 25})
-        .withMessage('code have a not valid length'),
-    body('description')
-        .isString()
-        .withMessage('This is a not valid description')
-        .isLength({max: 200})
-        .withMessage('description have a not valid length'),
-    body('purchase_date')
-        .isDate()
-        .withMessage('This is a not valid purchase_date')
-        .notEmpty()
-        .withMessage('purchase_date is require'),
-    body('employee_id')
-        .isString()
-        .withMessage('This is a not valid id')
-        .notEmpty()
-        .withMessage('employee_id is require')
-        .isLength({max: 11})
-        .withMessage('employee_id have a not valid length'),
-];
-
-const validateIdRules = [
-    param('id')
+        .withMessage('last_name is require')
+        .isLength({min: 3, max: 50})
+        .withMessage('last_name have a not valid length'),
+    body('cuit').optional()
         .isNumeric()
-        .withMessage('This is a not valid id')
+        .withMessage('This is a not valid cuit')
         .notEmpty()
-        .withMessage('id is require')
+        .withMessage('cuit is require')
+        .isLength({min: 11, max: 11})
+        .withMessage('cuit have a not valid length'),
+    body('team_id').optional()
+        .isNumeric()
+        .withMessage('This is a not valid team_id'),
+    body('join_date').optional()
+        .isDate()
+        .withMessage('This is a not valid date')
+        .notEmpty()
+        .withMessage('join_date is require'),
+    body('rol').optional()
+        .isString()
+        .withMessage('This is a not valid rol')
+        .notEmpty()
+        .withMessage('rol is require')
+        .isLength({min: 3, max: 50})
+        .withMessage('rol have a not valid length'),
 ];
-
 
 module.exports = {
-    validateEmployeeRules: validateEmployeeRules,
-    validateAssetRules: validateAssetRules,
-    validateIdRules: validateIdRules
+    validatePost: validatePost,
+    validatePut: validatePut,
 }

@@ -1,8 +1,25 @@
 const assetModel = require('../models/asset-model');
+const employeeModel = require('../models/employee-model');
+const completeAsset = require('../utils/merge/asset');
 
 class AssetsService {
     static async findAllAssets () {
         const modelResponse = await assetModel.findAllAssets();
+        return modelResponse.length > 0 ? modelResponse : null;
+    }
+
+    static async findPaginatedAssets (items, page) {
+        const allAssetsResponse = await this.findAllAssets();
+        if(allAssetsResponse.length <= items){
+            return allAssetsResponse;
+        }
+        let offset;
+        if(page === 1){
+            offset = 0;
+        }else{
+            offset = (page-1)*items;
+        }
+        const modelResponse = await assetModel.findPaginatedAssets(items, offset);
         return modelResponse.length > 0 ? modelResponse : null;
     }
 
@@ -17,14 +34,24 @@ class AssetsService {
     }
 
     static async createAsset (asset) {
+        const findEmployeeResponse = await employeeModel.findEmployeeById(asset.employee_id);
+        console.log(findEmployeeResponse);
+        if(findEmployeeResponse.length === 0){
+            return 404;
+        }
         const modelResponse = await assetModel.createAsset(asset);
         return modelResponse ? modelResponse : null;
     }
 
     static async updateAsset (asset, id) {
-        const findResponse = await this.findAssetById (id);
-        if(findResponse){
-            const updateResponse = await assetModel.updateAsset(asset,id);
+        const findAssetResponse = await this.findAssetById (id);
+        if(findAssetResponse){
+            const findEmployeeResponse = await employeeModel.findEmployeeById(asset.employee_id);
+            if(findEmployeeResponse.length === 0){
+                return 404;
+            }
+            const updatedEmployee = completeAsset(asset,findAssetResponse);
+            const updateResponse = await assetModel.updateAsset(updatedEmployee,id);
             return updateResponse ? {afectedRows: updateResponse} : 400;
         }else{
             return 404;

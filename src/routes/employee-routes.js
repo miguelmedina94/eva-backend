@@ -1,6 +1,7 @@
 const express = require('express');
 const employeeController = require('../controllers/employee-controller');
-const {validateEmployeeRules, validateIdRules} = require ('../utils/validate-middleware');
+const {validatePost,validatePut} = require('../utils/validate/employee');
+const { validateId, validatePagination } = require('../utils/validate/params');
 
 //creacion del router de empleados
 const employeeRoutes = express.Router();
@@ -9,12 +10,16 @@ const employeeRoutes = express.Router();
 employeeRoutes
     .route('/')
     .get(employeeController.getAllEmployees)
-    .post(validateEmployeeRules, employeeController.createEmployee);
+    .post(validatePost, employeeController.createEmployee);
     
 employeeRoutes
     .route('/:id')
-    .get(validateIdRules, employeeController.getEmployeeById)
-    .put(validateEmployeeRules, validateIdRules, employeeController.updateEmployee)
-    .delete(validateIdRules, employeeController.deleteEmployee);
+    .get(validateId, employeeController.getEmployeeById)
+    .put(validatePut, validateId, employeeController.updateEmployee)
+    .delete(validateId, employeeController.deleteEmployee);
+
+    employeeRoutes
+    .route('/items/:items/page/:page')
+    .get(validatePagination, employeeController.getPaginatedEmployee);
 
 module.exports = employeeRoutes;

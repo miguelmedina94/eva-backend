@@ -4,6 +4,12 @@ const findAllAssets = async () => {
     const rows = await connection.query("SELECT * FROM assets a").spread((rows) => rows);
     return rows;
 };
+
+const findPaginatedAssets = async (items, offset) => {
+    const rows = await connection.query(`SELECT * FROM assets a LIMIT ${items} OFFSET ${offset}`).spread((rows) => rows);
+    return rows;
+};
+
 const findAssetById = async (id) => {
     const row = await connection.query(`SELECT * FROM assets a WHERE id = ${id}`).spread((rows) => rows);
 
@@ -63,6 +69,7 @@ const deleteAssetByEmployeeId = async (id) => {
 
 module.exports = {
     findAllAssets: findAllAssets,
+    findPaginatedAssets: findPaginatedAssets,
     findAssetById: findAssetById,
     findAssetByEmployeeId: findAssetByEmployeeId,
     createAsset: createAsset,
