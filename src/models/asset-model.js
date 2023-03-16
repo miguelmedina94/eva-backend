@@ -1,7 +1,9 @@
 const connection = require('../config/db-config');
 
-const findAllAssets = async () => {
-    const rows = await connection.query("SELECT * FROM assets a").spread((rows) => rows);
+const findAllAssets = async (whereQuery) => {
+    const completeQuery = `SELECT * FROM assets a WHERE 1${whereQuery}`
+    console.log(completeQuery);
+    const rows = await connection.query(completeQuery).spread((rows) => rows);
     return rows;
 };
 

@@ -1,10 +1,12 @@
 const employeeModel = require('../models/employee-model');
 const assetModel = require('../models/asset-model');
 const completeEmployee = require('../utils/merge/employee');
+const queryEmployee = require('../utils/createQuery/where-employee');
 
 class EmployeeService {
-    static async findAllEmployee () {
-        const modelResponse = await employeeModel.findAllEmployee();
+    static async findAllEmployee (paramsQuery) {
+        const whereQuery = queryEmployee(paramsQuery);
+        const modelResponse = await employeeModel.findAllEmployee(whereQuery);
         return modelResponse.length > 0 ? modelResponse : null;
     }
 

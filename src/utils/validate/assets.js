@@ -15,7 +15,7 @@ const validatePost = [
         .withMessage('type is require')
         .isLength({min: 3, max: 30})
         .withMessage('type have a not valid length'),
-    body('code')
+    body('code').optional()
         .isAlphanumeric()
         .withMessage('This is a not valid code')
         .isLength({min: 10, max: 25})
@@ -36,7 +36,7 @@ const validatePost = [
         .notEmpty()
         .withMessage('employee_id is require')
         .isLength({max: 11})
-        .withMessage('employee_id have a not valid length'),
+        .withMessage('employee_id have a not valid length')
 ];
 
 const validatePut = [

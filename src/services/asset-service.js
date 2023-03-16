@@ -1,10 +1,12 @@
 const assetModel = require('../models/asset-model');
 const employeeModel = require('../models/employee-model');
+const queryAsset = require('../utils/createQuery/where-asset');
 const completeAsset = require('../utils/merge/asset');
 
 class AssetsService {
-    static async findAllAssets () {
-        const modelResponse = await assetModel.findAllAssets();
+    static async findAllAssets (paramsQuery) {
+        const whereQuery = queryAsset(paramsQuery);
+        const modelResponse = await assetModel.findAllAssets(whereQuery);
         return modelResponse.length > 0 ? modelResponse : null;
     }
 

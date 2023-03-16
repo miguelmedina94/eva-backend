@@ -1,7 +1,8 @@
 const express = require('express');
 const employeeController = require('../controllers/employee-controller');
 const {validatePost,validatePut} = require('../utils/validate/employee');
-const { validateId, validatePagination } = require('../utils/validate/params');
+const { validateId } = require('../utils/validate/params');
+const { validatePagination, validateFilterEmployee } = require('../utils/validate/query');
 
 //creacion del router de empleados
 const employeeRoutes = express.Router();
@@ -9,7 +10,7 @@ const employeeRoutes = express.Router();
 //Asigacion de paths y middleware para cada ruta del router de empleados
 employeeRoutes
     .route('/')
-    .get(employeeController.getAllEmployees)
+    .get(validatePagination, validateFilterEmployee, employeeController.getAllEmployees)
     .post(validatePost, employeeController.createEmployee);
     
 employeeRoutes
@@ -17,9 +18,5 @@ employeeRoutes
     .get(validateId, employeeController.getEmployeeById)
     .put(validatePut, validateId, employeeController.updateEmployee)
     .delete(validateId, employeeController.deleteEmployee);
-
-    employeeRoutes
-    .route('/items/:items/page/:page')
-    .get(validatePagination, employeeController.getPaginatedEmployee);
 
 module.exports = employeeRoutes;

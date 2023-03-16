@@ -1,4 +1,4 @@
-const { body, param } = require('express-validator');
+const { body } = require('express-validator');
 
 const validatePost = [
     body('first_name')
@@ -22,7 +22,7 @@ const validatePost = [
         .withMessage('cuit is require')
         .isLength({min: 11, max: 11})
         .withMessage('cuit have a not valid length'),
-    body('team_id')
+    body('team_id').optional()
         .isNumeric()
         .withMessage('This is a not valid team_id'),
     body('join_date')

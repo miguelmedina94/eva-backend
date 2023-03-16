@@ -3,10 +3,18 @@ const AssetDTO = require('../dto/asset-dto');
 const ErrorResponse = require('../dto/error-response');
 const SuccessResponse = require('../dto/success-response');
 const { validationResult } = require('express-validator');
+const url = require('url');
+const querystring = require('querystring');
 
 const getAllAssets = async (req, res, next) => {
     try {
-        const serviceResponse = await assetsService.findAllAssets();
+        const errors = validationResult(req);
+        if(!errors.isEmpty()){
+            res.json(new ErrorResponse().BadRequestError(errors.array()))
+        }
+        const parsedUrl = url.parse(req.url);
+        const parsedQuery = querystring.parse(parsedUrl.query);
+        const serviceResponse = await assetsService.findAllAssets(parsedQuery);
         if(serviceResponse === null){
             res.json(new ErrorResponse().notFoundError());
         }else{
