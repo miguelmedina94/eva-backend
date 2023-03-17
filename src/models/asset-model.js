@@ -64,8 +64,8 @@ const deleteAsset = async (id) => {
     return result[0].affectedRows;
 };
 
-const deleteAssetByEmployeeId = async (id) => {
-    const result = await connection.query(`DELETE FROM assets WHERE employee_id = ${id}`);
+const unlinkAssetByEmployeeId = async (id) => {
+    const result = await connection.query(`UPDATE assets SET employee_id=null WHERE employee_id = ${id}`);
     return result[0].affectedRows;
 };
 
@@ -77,5 +77,5 @@ module.exports = {
     createAsset: createAsset,
     updateAsset: updateAsset,
     deleteAsset: deleteAsset,
-    deleteAssetByEmployeeId: deleteAssetByEmployeeId
+    unlinkAssetByEmployeeId: unlinkAssetByEmployeeId
 }

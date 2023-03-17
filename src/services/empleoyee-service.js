@@ -50,7 +50,7 @@ class EmployeeService {
         const findResponse = await this.findEmployeeById (id);
         if(findResponse){
             const gralResponse = {};
-            const deleteAssetsResponse = await assetModel.deleteAssetByEmployeeId(id);
+            const deleteAssetsResponse = await assetModel.unlinkAssetByEmployeeId(id);
             gralResponse.AssetsAfectedRows = deleteAssetsResponse;
             const deleteEmployeeResponse = await employeeModel.deleteEmployee(id);
             gralResponse.EmployeeAfectedRows = deleteEmployeeResponse;
