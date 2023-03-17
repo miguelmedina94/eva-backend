@@ -37,7 +37,6 @@ class AssetsService {
 
     static async createAsset (asset) {
         const findEmployeeResponse = await employeeModel.findEmployeeById(asset.employee_id);
-        console.log(findEmployeeResponse);
         if(findEmployeeResponse.length === 0){
             return 404;
         }
