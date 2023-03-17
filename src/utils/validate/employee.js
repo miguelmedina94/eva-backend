@@ -79,6 +79,6 @@ const validatePut = [
 ];
 
 module.exports = {
-    validatePost: validatePost,
-    validatePut: validatePut,
-}
+    validatePost,
+    validatePut
+};

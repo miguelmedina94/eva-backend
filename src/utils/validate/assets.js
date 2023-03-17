@@ -78,8 +78,7 @@ const validatePut = [
         .withMessage('employee_id have a not valid length'),
 ];
 
-
 module.exports = {
-    validatePost: validatePost,
-    validatePut: validatePut
-}
+    validatePost,
+    validatePut
+};

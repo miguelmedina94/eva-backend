@@ -84,9 +84,8 @@ const validateFilterAsset = [
         .withMessage('employee_id cannot be empty')
 ];
 
-
 module.exports = {
-    validatePagination: validatePagination,
-    validateFilterEmployee: validateFilterEmployee,
-    validateFilterAsset: validateFilterAsset
-}
+    validatePagination,
+    validateFilterEmployee,
+    validateFilterAsset
+};

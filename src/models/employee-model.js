@@ -1,13 +1,8 @@
 const connection = require('../config/db-config');
 
 const findAllEmployee = async (whereQuery) => {
-    const completeQuery = `SELECT * FROM employees e WHERE 1${whereQuery}`
+    const completeQuery = `SELECT * FROM employees e WHERE 1${whereQuery}`;
     const rows = await connection.query(completeQuery).spread((rows) => rows);
-    return rows;
-};
-
-const findPaginatedEmployees = async (items, offset) => {
-    const rows = await connection.query(`SELECT * FROM employees a LIMIT ${items} OFFSET ${offset}`).spread((rows) => rows);
     return rows;
 };
 
@@ -25,15 +20,15 @@ const createEmployee = async (values) => {
         join_date,
         rol 
     } = values;
-
     const result = await connection.query("INSERT INTO employees (first_name, last_name, cuit, team_id, join_date, rol) values (?, ?, ?, ?, ?, ?)", 
-    [first_name,
-    last_name,
-    cuit,
-    team_id,
-    join_date,
-    rol]);
-
+    [
+        first_name,
+        last_name,
+        cuit,
+        team_id,
+        join_date,
+        rol
+    ]);
     return result[0].insertId;
 };
 const updateEmployee = async (employee, id) => {
@@ -56,10 +51,9 @@ const deleteEmployee = async (id) => {
 };
 
 module.exports = {
-    findAllEmployee: findAllEmployee,
-    findPaginatedEmployees: findPaginatedEmployees,
-    findEmployeeById: findEmployeeById,
-    createEmployee: createEmployee,
-    updateEmployee: updateEmployee,
-    deleteEmployee: deleteEmployee
-}
+    findAllEmployee,
+    findEmployeeById,
+    createEmployee,
+    updateEmployee,
+    deleteEmployee
+};

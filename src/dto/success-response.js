@@ -14,4 +14,4 @@ class SuccessResponse {
     }
 }
 
-module.exports = SuccessResponse
+module.exports = SuccessResponse;

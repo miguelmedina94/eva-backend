@@ -10,21 +10,6 @@ class EmployeeService {
         return modelResponse.length > 0 ? modelResponse : null;
     }
 
-    static async findPaginatedEmployees (items, page) {
-        const allEmployeesResponse = await this.findAllEmployee();
-        if(allEmployeesResponse.length <= items){
-            return allEmployeesResponse;
-        }
-        let offset;
-        if(page === 1){
-            offset = 0;
-        }else{
-            offset = (page-1)*items;
-        }
-        const modelResponse = await employeeModel.findPaginatedEmployees(items, offset);
-        return modelResponse.length > 0 ? modelResponse : null;
-    }
-
     static async findEmployeeById (id) {
         const modelResponse = await employeeModel.findEmployeeById(id);
         return modelResponse.length > 0 ? modelResponse[0] : null;
